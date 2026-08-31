@@ -1,0 +1,2975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKY//STUDY — South African Pilot Study Hub</title>
+
+<style>
+:root{
+    --bg:#070b10;
+    --panel:#0d141d;
+    --panel2:#111c27;
+    --border:#243241;
+    --text:#f3f7fa;
+    --muted:#8fa1b3;
+    --accent:#36b7ff;
+    --accent2:#75d6ff;
+    --green:#36d98a;
+    --red:#ff5d6c;
+    --gold:#ffc857;
+    --shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 80% 0%,rgba(54,183,255,.12),transparent 30%),
+        radial-gradient(circle at 0% 100%,rgba(117,214,255,.06),transparent 25%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    background:rgba(8,13,19,.94);
+    border-right:1px solid var(--border);
+    padding:24px 16px;
+    position:fixed;
+    inset:0 auto 0 0;
+    z-index:20;
+    overflow-y:auto;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 10px 26px;
+}
+
+.logo-mark{
+    width:42px;
+    height:42px;
+    border:1px solid var(--accent);
+    display:grid;
+    place-items:center;
+    transform:skew(-8deg);
+    box-shadow:0 0 20px rgba(54,183,255,.15);
+}
+
+.logo-mark span{
+    font-size:20px;
+    transform:skew(8deg);
+}
+
+.logo h1{
+    font-size:18px;
+    letter-spacing:2px;
+}
+
+.logo small{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    letter-spacing:2px;
+    margin-top:3px;
+}
+
+.nav-title{
+    color:#526577;
+    font-size:10px;
+    letter-spacing:2px;
+    margin:18px 10px 8px;
+}
+
+.nav-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    text-align:left;
+    padding:12px 13px;
+    border-radius:8px;
+    margin:2px 0;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    transition:.2s;
+}
+
+.nav-btn:hover{
+    background:#111c27;
+    color:white;
+}
+
+.nav-btn.active{
+    background:linear-gradient(90deg,rgba(54,183,255,.16),transparent);
+    color:var(--accent2);
+    border-left:2px solid var(--accent);
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:28px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:28px;
+}
+
+.menu-mobile{
+    display:none;
+}
+
+.eyebrow{
+    color:var(--accent);
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+}
+
+h2{
+    font-size:30px;
+    letter-spacing:-.5px;
+}
+
+.top-actions{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    border:1px solid var(--border);
+    background:var(--panel);
+    color:var(--text);
+    padding:10px 15px;
+    border-radius:8px;
+    transition:.2s;
+}
+
+.btn:hover{
+    border-color:#41627d;
+    transform:translateY(-1px);
+}
+
+.btn.primary{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#041019;
+    font-weight:700;
+}
+
+.btn.success{
+    background:var(--green);
+    color:#04130b;
+    border-color:var(--green);
+    font-weight:700;
+}
+
+.btn.danger{
+    background:var(--red);
+    border-color:var(--red);
+    color:white;
+}
+
+.btn.gold{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:#1a1300;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    gap:16px;
+}
+
+.grid-4{
+    grid-template-columns:repeat(4,1fr);
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.card{
+    background:linear-gradient(145deg,rgba(17,28,39,.95),rgba(9,15,22,.95));
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.stat{
+    position:relative;
+    overflow:hidden;
+}
+
+.stat::after{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    border:1px solid rgba(54,183,255,.15);
+    border-radius:50%;
+    right:-45px;
+    top:-45px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.stat-value{
+    font-size:30px;
+    margin-top:7px;
+    font-weight:800;
+}
+
+.stat-sub{
+    color:#607486;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+    background:#17232e;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:20px;
+    transition:.5s;
+}
+
+.section{
+    margin-top:22px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.section-header h3{
+    font-size:17px;
+}
+
+/* HERO */
+
+.hero{
+    min-height:245px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:30px;
+    background:
+        linear-gradient(90deg,rgba(8,13,19,.98),rgba(8,13,19,.55)),
+        radial-gradient(circle at 75% 50%,rgba(54,183,255,.16),transparent 30%);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+}
+
+.hero::after{
+    content:"✈";
+    position:absolute;
+    right:8%;
+    top:30px;
+    font-size:150px;
+    opacity:.035;
+    transform:rotate(-8deg);
+}
+
+.hero h3{
+    font-size:36px;
+    max-width:600px;
+    margin-bottom:12px;
+}
+
+.hero p{
+    color:var(--muted);
+    max-width:620px;
+    line-height:1.6;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+/* SUBJECT */
+
+.subject{
+    min-height:155px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.subject-icon{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.subject h4{
+    margin-bottom:5px;
+}
+
+.subject p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.subject-bottom{
+    margin-top:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.badge{
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:10px;
+    background:#17232e;
+    color:#8fa1b3;
+}
+
+.badge.green{
+    color:var(--green);
+    background:rgba(54,217,138,.08);
+}
+
+/* FLASHCARDS */
+
+.flash-wrap{
+    max-width:800px;
+    margin:auto;
+}
+
+.flashcard{
+    min-height:380px;
+    perspective:1000px;
+}
+
+.flash-inner{
+    width:100%;
+    height:100%;
+    min-height:380px;
+    position:relative;
+    transition:transform .6s;
+    transform-style:preserve-3d;
+}
+
+.flashcard.flipped .flash-inner{
+    transform:rotateY(180deg);
+}
+
+.flash-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:linear-gradient(145deg,#101b26,#091017);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+}
+
+.flash-back{
+    transform:rotateY(180deg);
+}
+
+.flash-letter{
+    font-size:90px;
+    font-weight:900;
+    color:var(--accent);
+    margin-bottom:15px;
+}
+
+.flash-word{
+    font-size:34px;
+    font-weight:800;
+}
+
+.flash-desc{
+    color:var(--muted);
+    line-height:1.6;
+    max-width:600px;
+    margin-top:15px;
+}
+
+.flash-controls{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:15px;
+}
+
+/* QUIZ */
+
+.quiz{
+    max-width:850px;
+    margin:auto;
+}
+
+.quiz-top{
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:15px;
+}
+
+.question-card{
+    padding:28px;
+}
+
+.question{
+    font-size:24px;
+    line-height:1.4;
+    margin-bottom:22px;
+}
+
+.answers{
+    display:grid;
+    gap:10px;
+}
+
+.answer{
+    width:100%;
+    text-align:left;
+    border:1px solid var(--border);
+    background:#0d1721;
+    color:var(--text);
+    padding:15px;
+    border-radius:10px;
+    transition:.2s;
+}
+
+.answer:hover{
+    border-color:#4d718d;
+    background:#12202c;
+}
+
+.answer.correct{
+    border-color:var(--green);
+    background:rgba(54,217,138,.1);
+}
+
+.answer.wrong{
+    border-color:var(--red);
+    background:rgba(255,93,108,.1);
+}
+
+.answer.disabled{
+    pointer-events:none;
+}
+
+.feedback{
+    margin-top:20px;
+    padding:17px;
+    border-radius:10px;
+    display:none;
+    line-height:1.6;
+}
+
+.feedback.show{
+    display:block;
+}
+
+.feedback.correct{
+    border:1px solid rgba(54,217,138,.35);
+    background:rgba(54,217,138,.07);
+}
+
+.feedback.wrong{
+    border:1px solid rgba(255,93,108,.35);
+    background:rgba(255,93,108,.07);
+}
+
+/* SEARCH */
+
+.search{
+    width:100%;
+    padding:13px 15px;
+    background:#0b131b;
+    border:1px solid var(--border);
+    border-radius:9px;
+    color:white;
+    outline:none;
+}
+
+.search:focus{
+    border-color:var(--accent);
+}
+
+/* FACT */
+
+.fact{
+    display:flex;
+    gap:15px;
+    align-items:flex-start;
+}
+
+.fact-icon{
+    width:45px;
+    height:45px;
+    display:grid;
+    place-items:center;
+    background:rgba(54,183,255,.08);
+    border:1px solid rgba(54,183,255,.2);
+    border-radius:10px;
+    font-size:20px;
+}
+
+.fact p{
+    color:var(--muted);
+    line-height:1.6;
+    font-size:13px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+}
+
+th{
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+td{
+    font-size:13px;
+}
+
+/* ACHIEVEMENT */
+
+.achievement{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.achievement-icon{
+    font-size:30px;
+}
+
+.locked{
+    opacity:.35;
+}
+
+/* RADIO */
+
+.radio-box{
+    background:#05090d;
+    border:1px solid #1f2e3a;
+    border-radius:12px;
+    padding:20px;
+    font-family:monospace;
+    line-height:1.8;
+}
+
+.radio-line{
+    color:#8fa1b3;
+}
+
+.radio-you{
+    color:var(--green);
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-card{
+    max-width:600px;
+    width:100%;
+    background:#0d151e;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:25px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#111c27;
+    border:1px solid var(--border);
+    padding:13px 18px;
+    border-radius:10px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:200;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+    .grid-4{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:800px){
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+        padding:18px;
+    }
+
+    .menu-mobile{
+        display:block;
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .top-actions{
+        display:none;
+    }
+
+    .grid-3,
+    .grid-2{
+        grid-template-columns:1fr;
+    }
+
+    .hero h3{
+        font-size:28px;
+    }
+}
+
+@media(max-width:550px){
+    .grid-4{
+        grid-template-columns:1fr;
+    }
+
+    h2{
+        font-size:24px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+
+    .hero{
+        padding:22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        <div class="logo-mark"><span>✈</span></div>
+        <div>
+            <h1>SKY//STUDY</h1>
+            <small>SA PILOT ACADEMY</small>
+        </div>
+    </div>
+
+    <div class="nav-title">MAIN</div>
+
+    <button class="nav-btn active" onclick="showPage('dashboard',this)">
+        <span class="nav-icon">⌂</span> Dashboard
+    </button>
+
+    <button class="nav-btn" onclick="showPage('study',this)">
+        <span class="nav-icon">📚</span> Study
+    </button>
+
+    <button class="nav-btn" onclick="showPage('flashcards',this)">
+        <span class="nav-icon">🃏</span> Flashcards
+    </button>
+
+    <button class="nav-btn" onclick="showPage('quiz',this)">
+        <span class="nav-icon">🧠</span> Quiz
+    </button>
+
+    <button class="nav-btn" onclick="showPage('mock',this)">
+        <span class="nav-icon">📝</span> Mock Exam
+    </button>
+
+    <div class="nav-title">AVIATION</div>
+
+    <button class="nav-btn" onclick="showPage('alphabet',this)">
+        <span class="nav-icon">🔤</span> Phonetic Alphabet
+    </button>
+
+    <button class="nav-btn" onclick="showPage('abbreviations',this)">
+        <span class="nav-icon">📡</span> Abbreviations
+    </button>
+
+    <button class="nav-btn" onclick="showPage('radio',this)">
+        <span class="nav-icon">🎙️</span> Radio Practice
+    </button>
+
+    <button class="nav-btn" onclick="showPage('facts',this)">
+        <span class="nav-icon">💡</span> Aviation Facts
+    </button>
+
+    <div class="nav-title">YOUR PROGRESS</div>
+
+    <button class="nav-btn" onclick="showPage('progress',this)">
+        <span class="nav-icon">📊</span> Statistics
+    </button>
+
+    <button class="nav-btn" onclick="showPage('achievements',this)">
+        <span class="nav-icon">🏆</span> Achievements
+    </button>
+
+    <button class="nav-btn" onclick="openProfile()">
+        <span class="nav-icon">👤</span> Pilot Profile
+    </button>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <div class="topbar">
+        <div style="display:flex;gap:12px;align-items:center;">
+            <button class="btn menu-mobile" onclick="toggleMenu()">☰</button>
+
+            <div>
+                <div class="eyebrow">FLIGHT DECK / STUDY SYSTEM</div>
+                <h2 id="pageTitle">Dashboard</h2>
+            </div>
+        </div>
+
+        <div class="top-actions">
+            <button class="btn" onclick="dailyChallenge()">⚡ Daily Challenge</button>
+            <button class="btn primary" onclick="showPage('quiz')">Start Quiz</button>
+        </div>
+    </div>
+
+
+<!-- DASHBOARD -->
+<section id="page-dashboard" class="page">
+
+    <div class="hero">
+        <div>
+            <div class="eyebrow">WELCOME ABOARD</div>
+
+            <h3>Train your brain.<br>Think like a pilot.</h3>
+
+            <p>
+                Your interactive aviation study system built with
+                South African pilot training in mind.
+                Learn. Test yourself. Track your progress.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="btn primary" onclick="showPage('quiz')">
+                    Start Studying →
+                </button>
+
+                <button class="btn" onclick="showPage('flashcards')">
+                    Review Flashcards
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="grid grid-4 section">
+
+        <div class="card stat">
+            <div class="stat-label">XP</div>
+            <div class="stat-value" id="dashXP">0</div>
+            <div class="stat-sub">Keep learning</div>
+        </div>
+
+        <div class="card stat">
+            <div class="stat-label">Accuracy</div>
+            <div class="stat-value" id="dashAccuracy">0%</div>
+            <div class="stat-sub">Overall performance</div>
+        </div>
+
+        <div class="card stat">
+            <div class="stat-label">Questions</div>
+            <div class="stat-value" id="dashQuestions">0</div>
+            <div class="stat-sub">Completed</div>
+        </div>
+
+        <div class="card stat">
+            <div class="stat-label">🔥 Streak</div>
+            <div class="stat-value" id="dashStreak">0</div>
+            <div class="stat-sub">Days</div>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-header">
+            <h3>Continue Learning</h3>
+        </div>
+
+        <div class="grid grid-3">
+
+            <div class="card subject">
+                <div>
+                    <div class="subject-icon">🔤</div>
+                    <h4>Phonetic Alphabet</h4>
+                    <p>Alpha, Bravo, Charlie, Delta and beyond.</p>
+                </div>
+
+                <div class="subject-bottom">
+                    <span class="badge green">STARTER</span>
+                    <button class="btn" onclick="showPage('alphabet')">Open</button>
+                </div>
+            </div>
+
+            <div class="card subject">
+                <div>
+                    <div class="subject-icon">📡</div>
+                    <h4>Aviation Abbreviations</h4>
+                    <p>Learn the language pilots use every day.</p>
+                </div>
+
+                <div class="subject-bottom">
+                    <span class="badge">CORE</span>
+                    <button class="btn" onclick="showPage('abbreviations')">Open</button>
+                </div>
+            </div>
+
+            <div class="card subject">
+                <div>
+                    <div class="subject-icon">🌦️</div>
+                    <h4>Meteorology</h4>
+                    <p>Clouds, pressure, wind, weather and reports.</p>
+                </div>
+
+                <div class="subject-bottom">
+                    <span class="badge">PPL</span>
+                    <button class="btn" onclick="startSubjectQuiz('Meteorology')">Quiz</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="grid grid-2 section">
+
+        <div class="card">
+
+            <div class="section-header">
+                <h3>Today's Aviation Fact</h3>
+                <span>💡</span>
+            </div>
+
+            <div class="fact">
+                <div class="fact-icon">✈️</div>
+                <div>
+                    <h4 id="dailyFactTitle">The four forces</h4>
+                    <p id="dailyFactText">
+                        The four fundamental forces acting on an aircraft
+                        in flight are lift, weight, thrust and drag.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="section-header">
+                <h3>Your Level</h3>
+                <span id="levelBadge">STUDENT PILOT</span>
+            </div>
+
+            <h2 id="levelName">Student Pilot</h2>
+
+            <div class="progress">
+                <div class="progress-bar" id="levelProgress"></div>
+            </div>
+
+            <p style="color:var(--muted);font-size:12px;margin-top:8px;">
+                <span id="levelXP">0</span> XP
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STUDY -->
+<section id="page-study" class="page" style="display:none;">
+
+    <div class="card">
+
+        <input
+            class="search"
+            id="studySearch"
+            placeholder="🔎 Search pilot subjects..."
+            oninput="filterSubjects()"
+        >
+
+    </div>
+
+    <div class="grid grid-3 section" id="subjectGrid">
+
+        <div class="card subject" data-name="principles flight">
+            <div>
+                <div class="subject-icon">🛩️</div>
+                <h4>Principles of Flight</h4>
+                <p>Lift, drag, thrust, weight, stability and aircraft control.</p>
+            </div>
+            <button class="btn" onclick="startSubjectQuiz('Principles of Flight')">Study →</button>
+        </div>
+
+        <div class="card subject" data-name="meteorology weather">
+            <div>
+                <div class="subject-icon">🌦️</div>
+                <h4>Meteorology</h4>
+                <p>Atmosphere, pressure, temperature, wind, clouds and weather.</p>
+            </div>
+            <button class="btn" onclick="startSubjectQuiz('Meteorology')">Study →</button>
+        </div>
+
+        <div class="card subject" data-name="navigation">
+            <div>
+                <div class="subject-icon">🧭</div>
+                <h4>Navigation</h4>
+                <p>Charts, headings, bearings, distance, time and navigation concepts.</p>
+            </div>
+            <button class="btn" onclick="startSubjectQuiz('Navigation')">Study →</button>
+        </div>
+
+        <div class="card subject" data-name="radio communication">
+            <div>
+                <div class="subject-icon">📻</div>
+                <h4>Radio & Communication</h4>
+                <p>Phonetic alphabet, radio phraseology and communication basics.</p>
+            </div>
+            <button class="btn" onclick="startSubjectQuiz('Radio')">Study →</button>
+        </div>
+
+        <div class="card subject" data-name="human performance">
+            <div>
+                <div class="subject-icon">🧠</div>
+                <h4>Human Performance</h4>
+                <p>Fatigue, workload, decision-making and human factors.</p>
+            </div>
+            <button class="btn" onclick="startSubjectQuiz('Human Performance')">Study →</button>
+        </div>
+
+        <div class="card subject" data-name="air law regulations south africa">
+            <div>
+                <div class="subject-icon">🇿🇦</div>
+                <h4>South African Aviation</h4>
+                <p>SACAA, licensing, ATOs, AIP and South African aviation resources.</p>
+            </div>
+            <button class="btn" onclick="showPage('sa')">Open →</button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="page-flashcards" class="page" style="display:none;">
+
+    <div class="flash-wrap">
+
+        <div class="quiz-top">
+            <span id="flashCount">Card 1</span>
+            <span>Click card to flip</span>
+        </div>
+
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+
+            <div class="flash-inner">
+
+                <div class="flash-face">
+
+                    <div class="flash-letter" id="flashLetter">A</div>
+
+                    <div class="flash-word" id="flashWord">Alpha</div>
+
+                    <div class="flash-desc">
+                        Click the card to reveal the answer.
+                    </div>
+
+                </div>
+
+                <div class="flash-face flash-back">
+
+                    <div class="eyebrow">PHONETIC ALPHABET</div>
+
+                    <div class="flash-word" id="flashBackWord">Alpha</div>
+
+                    <div class="flash-desc" id="flashBackDesc">
+                        A
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="flash-controls">
+
+            <button class="btn" onclick="previousFlash()">← Previous</button>
+
+            <button class="btn primary" onclick="flipCard()">Flip Card</button>
+
+            <button class="btn" onclick="nextFlash()">Next →</button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="page-quiz" class="page" style="display:none;">
+
+    <div class="quiz">
+
+        <div class="quiz-top">
+            <span id="quizProgress">Question 1/10</span>
+            <span id="quizXP">+10 XP</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="quizProgressBar"></div>
+        </div>
+
+        <div class="card question-card section">
+
+            <div class="question" id="quizQuestion">
+                Loading question...
+            </div>
+
+            <div class="answers" id="quizAnswers"></div>
+
+            <div class="feedback" id="quizFeedback"></div>
+
+            <div style="margin-top:20px;display:flex;justify-content:space-between;gap:10px;">
+
+                <button class="btn" onclick="skipQuestion()">
+                    Skip
+                </button>
+
+                <button
+                    class="btn primary"
+                    id="nextQuestionBtn"
+                    onclick="nextQuestion()"
+                    style="display:none;"
+                >
+                    Next Question →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MOCK -->
+<section id="page-mock" class="page" style="display:none;">
+
+    <div class="card">
+
+        <div class="eyebrow">EXAM SIMULATION</div>
+
+        <h3 style="font-size:27px;margin-bottom:10px;">
+            South African Pilot Knowledge Mock Exam
+        </h3>
+
+        <p style="color:var(--muted);line-height:1.6;">
+            This is a study simulation only. It is not an official SACAA examination
+            and should never replace current SACAA material or instruction from your ATO.
+        </p>
+
+        <div class="grid grid-3 section">
+
+            <div class="card">
+                <h4>10 Questions</h4>
+                <p style="color:var(--muted);font-size:12px;margin-top:6px;">
+                    Mixed subjects
+                </p>
+            </div>
+
+            <div class="card">
+                <h4>Timed</h4>
+                <p style="color:var(--muted);font-size:12px;margin-top:6px;">
+                    10 minutes
+                </p>
+            </div>
+
+            <div class="card">
+                <h4>Instant Review</h4>
+                <p style="color:var(--muted);font-size:12px;margin-top:6px;">
+                    Explanation after submission
+                </p>
+            </div>
+
+        </div>
+
+        <button class="btn primary section" onclick="startMockExam()">
+            Start Mock Exam →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ALPHABET -->
+<section id="page-alphabet" class="page" style="display:none;">
+
+    <div class="card">
+
+        <div class="section-header">
+            <h3>ICAO / NATO Phonetic Alphabet</h3>
+
+            <button class="btn primary" onclick="startAlphabetQuiz()">
+                Test Me
+            </button>
+        </div>
+
+        <div class="grid grid-4" id="alphabetGrid"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ABBREVIATIONS -->
+<section id="page-abbreviations" class="page" style="display:none;">
+
+    <div class="card">
+
+        <input
+            class="search"
+            placeholder="🔎 Search abbreviation..."
+            oninput="filterAbbreviations(this.value)"
+        >
+
+        <div class="table-wrap section">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Meaning</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+
+                <tbody id="abbreviationTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RADIO -->
+<section id="page-radio" class="page" style="display:none;">
+
+    <div class="grid grid-2">
+
+        <div class="card">
+
+            <div class="eyebrow">RADIO PRACTICE</div>
+
+            <h3>Listen. Think. Respond.</h3>
+
+            <p style="color:var(--muted);line-height:1.6;margin-top:10px;">
+                Practice understanding aviation communication scenarios.
+            </p>
+
+            <div class="radio-box section">
+
+                <div class="radio-line">
+                    ATC: "ZS-ABC, runway 01, cleared for takeoff."
+                </div>
+
+                <br>
+
+                <div class="radio-you">
+                    YOUR RESPONSE:
+                </div>
+
+                <input
+                    class="search section"
+                    id="radioAnswer"
+                    placeholder="Type your response..."
+                >
+
+            </div>
+
+            <button class="btn primary section" onclick="checkRadio()">
+                Check Response
+            </button>
+
+            <div id="radioFeedback" class="feedback"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Radio Reminders</h3>
+
+            <div class="section">
+
+                <p style="color:var(--muted);line-height:1.7;font-size:13px;">
+                    • Listen before transmitting.<br>
+                    • Use the correct callsign.<br>
+                    • Keep transmissions concise.<br>
+                    • Use standard phraseology where applicable.<br>
+                    • Never invent phraseology when safety is involved.<br>
+                    • Your instructor/ATO should teach the applicable procedures.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FACTS -->
+<section id="page-facts" class="page" style="display:none;">
+
+    <div class="grid grid-2" id="factsGrid"></div>
+
+</section>
+
+
+<!-- PROGRESS -->
+<section id="page-progress" class="page" style="display:none;">
+
+    <div class="grid grid-4">
+
+        <div class="card stat">
+            <div class="stat-label">Total XP</div>
+            <div class="stat-value" id="progressXP">0</div>
+        </div>
+
+        <div class="card stat">
+            <div class="stat-label">Correct</div>
+            <div class="stat-value" id="progressCorrect">0</div>
+        </div>
+
+        <div class="card stat">
+            <div class="stat-label">Wrong</div>
+            <div class="stat-value" id="progressWrong">0</div>
+        </div>
+
+        <div class="card stat">
+            <div class="stat-label">Accuracy</div>
+            <div class="stat-value" id="progressAccuracy">0%</div>
+        </div>
+
+    </div>
+
+    <div class="card section">
+
+        <div class="section-header">
+            <h3>Overall Knowledge</h3>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="overallProgress"></div>
+        </div>
+
+        <p style="color:var(--muted);font-size:12px;margin-top:8px;">
+            Your accuracy is used as your current knowledge indicator.
+        </p>
+
+    </div>
+
+    <div class="card section">
+
+        <h3>Study Streak</h3>
+
+        <div style="font-size:50px;margin-top:15px;">
+            🔥 <span id="bigStreak">0</span>
+        </div>
+
+        <p style="color:var(--muted);margin-top:5px;">
+            consecutive study days
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+<section id="page-achievements" class="page" style="display:none;">
+
+    <div class="grid grid-2" id="achievementGrid"></div>
+
+</section>
+
+
+<!-- SOUTH AFRICA -->
+<section id="page-sa" class="page" style="display:none;">
+
+    <div class="card">
+
+        <div class="eyebrow">🇿🇦 SOUTH AFRICA</div>
+
+        <h3>Know Your Aviation Authority</h3>
+
+        <p style="color:var(--muted);line-height:1.7;margin-top:10px;">
+            The South African Civil Aviation Authority (SACAA) is the national
+            civil aviation authority. This section is designed to help you
+            understand where official information comes from.
+        </p>
+
+    </div>
+
+    <div class="grid grid-2 section">
+
+        <div class="card">
+
+            <h3>SACAA Licensing</h3>
+
+            <p style="color:var(--muted);line-height:1.6;margin-top:8px;">
+                Use the official SACAA Personnel Licensing information for
+                current licensing requirements, forms, notices and related information.
+            </p>
+
+            <a
+                href="https://www.caa.co.za/industry-information/personnel-licensing/licensing/"
+                target="_blank"
+                class="btn primary"
+                style="display:inline-block;text-decoration:none;margin-top:15px;"
+            >
+                Open SACAA Licensing ↗
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>SACAA Examinations</h3>
+
+            <p style="color:var(--muted);line-height:1.6;margin-top:8px;">
+                Check the current SACAA examination information and official
+                study-material references.
+            </p>
+
+            <a
+                href="https://www.caa.co.za/industry-information/personnel-licensing/examinations/"
+                target="_blank"
+                class="btn primary"
+                style="display:inline-block;text-decoration:none;margin-top:15px;"
+            >
+                Open SACAA Exams ↗
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Aeronautical Information</h3>
+
+            <p style="color:var(--muted);line-height:1.6;margin-top:8px;">
+                The AIP contains official aeronautical information. Always
+                use the current official publication when information is operationally relevant.
+            </p>
+
+            <a
+                href="https://www.caa.co.za/industry-information/aip-amendments/"
+                target="_blank"
+                class="btn primary"
+                style="display:inline-block;text-decoration:none;margin-top:15px;"
+            >
+                Open SACAA AIP ↗
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Approved Training Organisations</h3>
+
+            <p style="color:var(--muted);line-height:1.6;margin-top:8px;">
+                SACAA provides an ATO verification portal. Confirm training
+                approval before relying on a training provider.
+            </p>
+
+            <a
+                href="https://www.caa.co.za/ato-home/"
+                target="_blank"
+                class="btn primary"
+                style="display:inline-block;text-decoration:none;margin-top:15px;"
+            >
+                Open ATO Portal ↗
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="card section">
+
+        <div class="eyebrow">IMPORTANT</div>
+
+        <h3>This Website Is A Study Tool</h3>
+
+        <p style="color:var(--muted);line-height:1.7;margin-top:8px;">
+            Aviation regulations, procedures, charts, frequencies, weather,
+            NOTAMs and operational information can change. Do not use this
+            website as your sole source of operational information or as a
+            replacement for an instructor, ATO, current AIP or applicable
+            regulations.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+</div>
+
+
+<!-- PROFILE MODAL -->
+<div class="modal" id="profileModal">
+
+    <div class="modal-card">
+
+        <div class="modal-head">
+            <h3>Pilot Profile</h3>
+            <button class="btn" onclick="closeProfile()">✕</button>
+        </div>
+
+        <label style="color:var(--muted);font-size:12px;">
+            Pilot name
+        </label>
+
+        <input
+            class="search section"
+            id="profileName"
+            placeholder="Your name"
+        >
+
+        <label style="color:var(--muted);font-size:12px;display:block;margin-top:15px;">
+            Goal
+        </label>
+
+        <select class="search section" id="profileGoal">
+
+            <option>Student Pilot</option>
+            <option>PPL</option>
+            <option>CPL</option>
+            <option>ATPL</option>
+            <option>General Aviation Knowledge</option>
+
+        </select>
+
+        <button class="btn primary section" onclick="saveProfile()">
+            Save Profile
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   SKY//STUDY
+   COMPLETE FRONT-END PILOT STUDY WEBSITE
+   ========================================================= */
+
+
+/* -------------------------
+   DATA
+------------------------- */
+
+const alphabet = [
+    ["A","Alpha"],["B","Bravo"],["C","Charlie"],["D","Delta"],
+    ["E","Echo"],["F","Foxtrot"],["G","Golf"],["H","Hotel"],
+    ["I","India"],["J","Juliett"],["K","Kilo"],["L","Lima"],
+    ["M","Mike"],["N","November"],["O","Oscar"],["P","Papa"],
+    ["Q","Quebec"],["R","Romeo"],["S","Sierra"],["T","Tango"],
+    ["U","Uniform"],["V","Victor"],["W","Whiskey"],["X","X-ray"],
+    ["Y","Yankee"],["Z","Zulu"]
+];
+
+
+const abbreviations = [
+
+    ["ATC","Air Traffic Control","Communication"],
+    ["ATIS","Automatic Terminal Information Service","Communication"],
+    ["VFR","Visual Flight Rules","Operations"],
+    ["IFR","Instrument Flight Rules","Operations"],
+    ["PPL","Private Pilot Licence","Licensing"],
+    ["CPL","Commercial Pilot Licence","Licensing"],
+    ["ATPL","Airline Transport Pilot Licence","Licensing"],
+    ["SPL","Student Pilot Licence","Licensing"],
+    ["ATO","Approved Training Organisation","Training"],
+    ["AIP","Aeronautical Information Publication","Information"],
+    ["AIS","Aeronautical Information Services","Information"],
+    ["METAR","Meteorological Aerodrome Report","Weather"],
+    ["TAF","Terminal Aerodrome Forecast","Weather"],
+    ["QNH","Altimeter setting referenced to mean sea level","Altimetry"],
+    ["QFE","Pressure setting related to aerodrome elevation","Altimetry"],
+    ["AMSL","Above Mean Sea Level","Navigation"],
+    ["AGL","Above Ground Level","Navigation"],
+    ["IAS","Indicated Airspeed","Flight"],
+    ["CAS","Calibrated Airspeed","Flight"],
+    ["TAS","True Airspeed","Flight"],
+    ["GS","Ground Speed","Navigation"],
+    ["RPM","Revolutions Per Minute","Aircraft"],
+    ["FOD","Foreign Object Debris/Damage","Safety"],
+    ["NOTAM","Notice to Airmen / Notice to Air Missions terminology varies by system","Information"],
+    ["CRM","Crew Resource Management","Human Factors"],
+    ["PIC","Pilot in Command","Operations"],
+    ["POH","Pilot's Operating Handbook","Aircraft"],
+    ["AFM","Aircraft Flight Manual","Aircraft"],
+    ["VMC","Visual Meteorological Conditions","Weather"],
+    ["IMC","Instrument Meteorological Conditions","Weather"],
+    ["UTC","Coordinated Universal Time","Time"]
+];
+
+
+const facts = [
+
+    {
+        title:"The four forces",
+        text:"Lift, weight, thrust and drag are the four fundamental forces acting on an aircraft in flight."
+    },
+
+    {
+        title:"Why pilots spell words",
+        text:"The phonetic alphabet reduces confusion between similar-sounding letters when communicating by radio."
+    },
+
+    {
+        title:"Zulu time",
+        text:"Aviation commonly uses UTC. The phonetic alphabet word for Z is Zulu, which is why UTC is often called Zulu time."
+    },
+
+    {
+        title:"Pressure and altitude",
+        text:"Changes in atmospheric pressure are important to pilots because altimeter indications depend on pressure settings."
+    },
+
+    {
+        title:"Weather matters",
+        text:"Pilots continuously consider wind, visibility, cloud, pressure, temperature and other weather factors when planning flights."
+    },
+
+    {
+        title:"Aviation language",
+        text:"Standardised phraseology helps pilots and air traffic services communicate efficiently and reduce misunderstandings."
+    },
+
+    {
+        title:"South African information",
+        text:"SACAA publishes official aeronautical information and licensing material. Always check the current official source when information matters operationally."
+    },
+
+    {
+        title:"Training organisations",
+        text:"Pilot training toward South African licences is conducted through approved training arrangements under the applicable regulatory framework."
+    }
+];
+
+
+const questions = [
+
+    {
+        category:"Radio",
+        question:"What is the phonetic alphabet word for the letter A?",
+        options:["Alpha","Alfa","Able","Atlas"],
+        answer:0,
+        explanation:"The ICAO phonetic alphabet uses ALFA for A. In this website we use the commonly displayed English spelling 'Alpha' for learning convenience; when studying for an official examination, use the exact terminology in your current approved material."
+    },
+
+    {
+        category:"Radio",
+        question:"What is the phonetic alphabet word for N?",
+        options:["November","Novembero","Niner","Nautical"],
+        answer:0,
+        explanation:"N is November in the ICAO phonetic alphabet."
+    },
+
+    {
+        category:"Radio",
+        question:"What does ATC stand for?",
+        options:[
+            "Air Traffic Control",
+            "Aircraft Traffic Communication",
+            "Air Transport Coordination",
+            "Aviation Traffic Centre"
+        ],
+        answer:0,
+        explanation:"ATC means Air Traffic Control."
+    },
+
+    {
+        category:"Radio",
+        question:"What does VFR stand for?",
+        options:[
+            "Visual Flight Rules",
+            "Variable Flight Route",
+            "Visual Flight Radio",
+            "Vertical Flight Rules"
+        ],
+        answer:0,
+        explanation:"VFR means Visual Flight Rules."
+    },
+
+    {
+        category:"Radio",
+        question:"What does IFR stand for?",
+        options:[
+            "Instrument Flight Rules",
+            "International Flight Radio",
+            "Instrument Flight Route",
+            "Internal Flight Regulations"
+        ],
+        answer:0,
+        explanation:"IFR means Instrument Flight Rules."
+    },
+
+    {
+        category:"Meteorology",
+        question:"Which of these is one of the four fundamental forces acting on an aircraft?",
+        options:["Lift","Magnetism","Buoyancy only","Friction only"],
+        answer:0,
+        explanation:"The four fundamental forces commonly taught in basic aerodynamics are lift, weight, thrust and drag."
+    },
+
+    {
+        category:"Meteorology",
+        question:"Which factor is especially important when assessing an aircraft's take-off performance?",
+        options:[
+            "Temperature",
+            "Paint colour",
+            "Seat fabric",
+            "Radio volume"
+        ],
+        answer:0,
+        explanation:"Temperature affects air density, which can influence aircraft performance. Pilots consider temperature together with other relevant performance factors."
+    },
+
+    {
+        category:"Navigation",
+        question:"What does AMSL mean?",
+        options:[
+            "Above Mean Sea Level",
+            "Above Maximum Safe Level",
+            "Air Measurement Standard Level",
+            "Average Mean Sky Level"
+        ],
+        answer:0,
+        explanation:"AMSL means Above Mean Sea Level."
+    },
+
+    {
+        category:"Navigation",
+        question:"What does AGL mean?",
+        options:[
+            "Above Ground Level",
+            "Air Ground Limit",
+            "Above Geographic Latitude",
+            "Aircraft Ground Location"
+        ],
+        answer:0,
+        explanation:"AGL means Above Ground Level."
+    },
+
+    {
+        category:"Flight",
+        question:"Which force opposes an aircraft's forward movement through the air?",
+        options:["Drag","Lift","Weight","Thrust"],
+        answer:0,
+        explanation:"Drag acts opposite to the aircraft's motion through the air."
+    },
+
+    {
+        category:"Flight",
+        question:"Which force generally acts opposite to weight in straight-and-level flight?",
+        options:["Lift","Drag","Thrust","Torque"],
+        answer:0,
+        explanation:"Lift acts generally upward and opposes weight in the basic four-force model."
+    },
+
+    {
+        category:"Human Performance",
+        question:"Which can negatively affect pilot performance?",
+        options:[
+            "Fatigue",
+            "Adequate rest",
+            "Good preparation",
+            "Effective communication"
+        ],
+        answer:0,
+        explanation:"Fatigue can reduce alertness, reaction time, decision-making and overall performance."
+    },
+
+    {
+        category:"South Africa",
+        question:"Which organisation is South Africa's civil aviation authority?",
+        options:[
+            "SACAA",
+            "SAA",
+            "ATNS only",
+            "ICAO South Africa"
+        ],
+        answer:0,
+        explanation:"SACAA is the South African Civil Aviation Authority."
+    },
+
+    {
+        category:"South Africa",
+        question:"What does ATO mean in the context of pilot training?",
+        options:[
+            "Approved Training Organisation",
+            "Aircraft Transport Office",
+            "Air Training Operator only",
+            "Aviation Test Organisation"
+        ],
+        answer:0,
+        explanation:"ATO means Approved Training Organisation."
+    },
+
+    {
+        category:"Information",
+        question:"What is the AIP?",
+        options:[
+            "Aeronautical Information Publication",
+            "Aircraft Inspection Procedure",
+            "Aviation Instructor Programme",
+            "Airline Information Portal"
+        ],
+        answer:0,
+        explanation:"AIP stands for Aeronautical Information Publication."
+    },
+
+    {
+        category:"Information",
+        question:"What does UTC represent?",
+        options:[
+            "Coordinated Universal Time",
+            "Universal Traffic Control",
+            "United Time Code",
+            "Universal Terminal Clock"
+        ],
+        answer:0,
+        explanation:"UTC is Coordinated Universal Time and is widely used as the time reference in aviation."
+    },
+
+    {
+        category:"Aircraft",
+        question:"What does RPM measure?",
+        options:[
+            "Revolutions Per Minute",
+            "Rate Per Mile",
+            "Rotations Per Metre",
+            "Radio Power Measurement"
+        ],
+        answer:0,
+        explanation:"RPM means Revolutions Per Minute."
+    },
+
+    {
+        category:"Aircraft",
+        question:"What does POH stand for?",
+        options:[
+            "Pilot's Operating Handbook",
+            "Pilot Operations History",
+            "Primary Operations Handbook",
+            "Pilot Orientation Help"
+        ],
+        answer:0,
+        explanation:"POH commonly refers to a Pilot's Operating Handbook."
+    }
+
+];
+
+
+/* -------------------------
+   STATE
+------------------------- */
+
+let state = JSON.parse(localStorage.getItem("skyStudyState")) || {
+
+    xp:0,
+    correct:0,
+    wrong:0,
+    questions:0,
+    streak:0,
+    lastStudy:null,
+    name:"",
+    goal:"Student Pilot",
+    achievements:[],
+    favourites:[]
+
+};
+
+
+function saveState(){
+
+    localStorage.setItem(
+        "skyStudyState",
+        JSON.stringify(state)
+    );
+
+    updateDashboard();
+}
+
+
+/* -------------------------
+   NAVIGATION
+------------------------- */
+
+function showPage(page,button=null){
+
+    document.querySelectorAll(".page").forEach(
+        p=>p.style.display="none"
+    );
+
+    const target=document.getElementById("page-"+page);
+
+    if(target){
+        target.style.display="block";
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(
+        b=>b.classList.remove("active")
+    );
+
+    if(button){
+        button.classList.add("active");
+    }else{
+
+        document.querySelectorAll(".nav-btn").forEach(btn=>{
+
+            if(btn.textContent.toLowerCase().includes(page)){
+                btn.classList.add("active");
+            }
+
+        });
+
+    }
+
+    const titles={
+        dashboard:"Dashboard",
+        study:"Study Centre",
+        flashcards:"Flashcards",
+        quiz:"Quiz",
+        mock:"Mock Exam",
+        alphabet:"Phonetic Alphabet",
+        abbreviations:"Aviation Abbreviations",
+        radio:"Radio Practice",
+        facts:"Aviation Facts",
+        progress:"Statistics",
+        achievements:"Achievements",
+        sa:"South African Aviation"
+    };
+
+    document.getElementById("pageTitle").textContent =
+        titles[page] || "Pilot Study";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    if(window.innerWidth<=800){
+        document.getElementById("sidebar").classList.remove("open");
+    }
+}
+
+
+function toggleMenu(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* -------------------------
+   DASHBOARD
+------------------------- */
+
+function updateDashboard(){
+
+    document.getElementById("dashXP").textContent=state.xp;
+
+    document.getElementById("dashQuestions").textContent=state.questions;
+
+    document.getElementById("dashStreak").textContent=state.streak;
+
+    const total=state.correct+state.wrong;
+
+    const accuracy=
+        total ? Math.round(state.correct/total*100) : 0;
+
+    document.getElementById("dashAccuracy").textContent=
+        accuracy+"%";
+
+    document.getElementById("progressXP").textContent=state.xp;
+
+    document.getElementById("progressCorrect").textContent=
+        state.correct;
+
+    document.getElementById("progressWrong").textContent=
+        state.wrong;
+
+    document.getElementById("progressAccuracy").textContent=
+        accuracy+"%";
+
+    document.getElementById("overallProgress").style.width=
+        accuracy+"%";
+
+    document.getElementById("bigStreak").textContent=
+        state.streak;
+
+    updateLevel();
+
+    renderAchievements();
+
+}
+
+
+function updateLevel(){
+
+    const levels=[
+        ["Student Pilot",0],
+        ["Aviation Rookie",100],
+        ["Radio Ready",300],
+        ["Navigation Nerd",600],
+        ["Sky Scholar",1000],
+        ["Pilot in Training",1600],
+        ["Future Aviator",2500],
+        ["Legend",4000]
+    ];
+
+    let current=levels[0];
+    let next=levels[1];
+
+    for(let i=0;i<levels.length;i++){
+
+        if(state.xp>=levels[i][1]){
+            current=levels[i];
+            next=levels[i+1] || ["Legend",state.xp+1];
+        }
+
+    }
+
+    document.getElementById("levelName").textContent=
+        current[0];
+
+    document.getElementById("levelBadge").textContent=
+        current[0].toUpperCase();
+
+    document.getElementById("levelXP").textContent=
+        state.xp;
+
+    const range=next[1]-current[1];
+
+    const progress=
+        Math.min(
+            100,
+            Math.round(
+                (state.xp-current[1])/range*100
+            )
+        );
+
+    document.getElementById("levelProgress").style.width=
+        progress+"%";
+
+}
+
+
+/* -------------------------
+   STREAK
+------------------------- */
+
+function recordStudy(){
+
+    const today=new Date().toDateString();
+
+    if(state.lastStudy===today){
+        return;
+    }
+
+    const yesterday=
+        new Date(Date.now()-86400000).toDateString();
+
+    if(state.lastStudy===yesterday){
+        state.streak++;
+    }else{
+        state.streak=1;
+    }
+
+    state.lastStudy=today;
+
+    saveState();
+
+}
+
+
+/* -------------------------
+   FLASHCARDS
+------------------------- */
+
+let flashIndex=0;
+
+function renderFlashcard(){
+
+    const item=alphabet[flashIndex];
+
+    document.getElementById("flashLetter").textContent=item[0];
+
+    document.getElementById("flashWord").textContent=item[1];
+
+    document.getElementById("flashBackWord").textContent=item[1];
+
+    document.getElementById("flashBackDesc").textContent=
+        item[0]+" — "+item[1];
+
+    document.getElementById("flashCount").textContent=
+        "Card "+(flashIndex+1)+" / "+alphabet.length;
+
+    document.getElementById("flashcard").classList.remove("flipped");
+
+}
+
+
+function flipCard(){
+
+    document
+        .getElementById("flashcard")
+        .classList.toggle("flipped");
+
+}
+
+
+function nextFlash(){
+
+    flashIndex=(flashIndex+1)%alphabet.length;
+
+    renderFlashcard();
+
+    recordStudy();
+
+}
+
+
+function previousFlash(){
+
+    flashIndex=
+        (flashIndex-1+alphabet.length)%alphabet.length;
+
+    renderFlashcard();
+
+}
+
+
+/* -------------------------
+   ALPHABET
+------------------------- */
+
+function renderAlphabet(){
+
+    const grid=document.getElementById("alphabetGrid");
+
+    grid.innerHTML="";
+
+    alphabet.forEach(item=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        div.innerHTML=`
+            <div style="font-size:35px;font-weight:900;color:var(--accent)">
+                ${item[0]}
+            </div>
+
+            <div style="margin-top:5px;font-weight:700">
+                ${item[1]}
+            </div>
+        `;
+
+        grid.appendChild(div);
+
+    });
+
+}
+
+
+/* -------------------------
+   ABBREVIATIONS
+------------------------- */
+
+function renderAbbreviations(search=""){
+
+    const table=document.getElementById("abbreviationTable");
+
+    table.innerHTML="";
+
+    abbreviations
+        .filter(item=>
+            item.join(" ")
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        )
+        .forEach(item=>{
+
+            const tr=document.createElement("tr");
+
+            tr.innerHTML=`
+                <td><strong style="color:var(--accent)">
+                    ${item[0]}
+                </strong></td>
+
+                <td>${item[1]}</td>
+
+                <td>
+                    <span class="badge">${item[2]}</span>
+                </td>
+            `;
+
+            table.appendChild(tr);
+
+        });
+
+}
+
+
+function filterAbbreviations(value){
+
+    renderAbbreviations(value);
+
+}
+
+
+/* -------------------------
+   STUDY SEARCH
+------------------------- */
+
+function filterSubjects(){
+
+    const value=
+        document.getElementById("studySearch")
+        .value
+        .toLowerCase();
+
+    document
+        .querySelectorAll("#subjectGrid .subject")
+        .forEach(card=>{
+
+            card.style.display=
+                card.dataset.name.includes(value)
+                ? "flex"
+                : "none";
+
+        });
+
+}
+
+
+/* -------------------------
+   QUIZ
+------------------------- */
+
+let quizQuestions=[];
+let quizIndex=0;
+let quizScore=0;
+let quizAnswered=false;
+let quizMode="normal";
+
+
+function startQuiz(customQuestions=null,mode="normal"){
+
+    quizMode=mode;
+
+    quizQuestions=
+        customQuestions ||
+        [...questions]
+        .sort(()=>Math.random()-.5)
+        .slice(0,10);
+
+    quizIndex=0;
+    quizScore=0;
+    quizAnswered=false;
+
+    showPage("quiz");
+
+    renderQuestion();
+
+    recordStudy();
+
+}
+
+
+function startSubjectQuiz(subject){
+
+    let filtered;
+
+    if(subject==="Radio"){
+        filtered=questions.filter(q=>q.category==="Radio");
+    }else{
+        filtered=questions.filter(q=>
+            q.category.toLowerCase()
+            .includes(subject.toLowerCase().split(" ")[0])
+        );
+    }
+
+    if(filtered.length<3){
+        filtered=[...questions];
+    }
+
+    startQuiz(
+        filtered.sort(()=>Math.random()-.5).slice(0,10)
+    );
+
+}
+
+
+function startAlphabetQuiz(){
+
+    const qs=alphabet.map(item=>{
+
+        const correct=item[1];
+
+        const options=[
+            correct,
+            ...alphabet
+                .filter(x=>x[1]!==correct)
+                .sort(()=>Math.random()-.5)
+                .slice(0,3)
+                .map(x=>x[1])
+        ].sort(()=>Math.random()-.5);
+
+        return{
+            category:"Alphabet",
+            question:`Which phonetic word represents the letter ${item[0]}?`,
+            options:options,
+            answer:options.indexOf(correct),
+            explanation:`${item[0]} is ${correct} in the ICAO phonetic alphabet.`
+        };
+
+    });
+
+    startQuiz(
+        qs.sort(()=>Math.random()-.5).slice(0,10)
+    );
+
+}
+
+
+function renderQuestion(){
+
+    if(quizIndex>=quizQuestions.length){
+
+        finishQuiz();
+
+        return;
+
+    }
+
+    const q=quizQuestions[quizIndex];
+
+    quizAnswered=false;
+
+    document.getElementById("quizProgress").textContent=
+        `Question ${quizIndex+1}/${quizQuestions.length}`;
+
+    document.getElementById("quizProgressBar").style.width=
+        `${(quizIndex/quizQuestions.length)*100}%`;
+
+    document.getElementById("quizQuestion").textContent=
+        q.question;
+
+    const answers=
+        document.getElementById("quizAnswers");
+
+    answers.innerHTML="";
+
+    q.options.forEach((option,index)=>{
+
+        const btn=document.createElement("button");
+
+        btn.className="answer";
+
+        btn.textContent=
+            String.fromCharCode(65+index)+". "+option;
+
+        btn.onclick=()=>answerQuestion(index);
+
+        answers.appendChild(btn);
+
+    });
+
+    document.getElementById("quizFeedback").className="feedback";
+
+    document.getElementById("quizFeedback").innerHTML="";
+
+    document.getElementById("nextQuestionBtn").style.display="none";
+
+}
+
+
+function answerQuestion(index){
+
+    if(quizAnswered){
+        return;
+    }
+
+    quizAnswered=true;
+
+    const q=quizQuestions[quizIndex];
+
+    const buttons=
+        document.querySelectorAll(".answer");
+
+    buttons.forEach(
+        b=>b.classList.add("disabled")
+    );
+
+    buttons[q.answer].classList.add("correct");
+
+    const feedback=
+        document.getElementById("quizFeedback");
+
+    if(index===q.answer){
+
+        quizScore++;
+
+        state.correct++;
+
+        state.questions++;
+
+        state.xp+=10;
+
+        feedback.className="feedback show correct";
+
+        feedback.innerHTML=
+            `<strong>✅ Correct!</strong><br>
+             ${q.explanation}<br><br>
+             <strong>+10 XP</strong>`;
+
+        showToast("+10 XP — Correct!");
+
+    }else{
+
+        state.wrong++;
+
+        state.questions++;
+
+        feedback.className="feedback show wrong";
+
+        buttons[index].classList.add("wrong");
+
+        feedback.innerHTML=
+            `<strong>❌ Not quite.</strong><br>
+             Correct answer: <strong>
+             ${q.options[q.answer]}
+             </strong><br><br>
+             ${q.explanation}`;
+
+    }
+
+    saveState();
+
+    document.getElementById("nextQuestionBtn").style.display=
+        "block";
+
+}
+
+
+function nextQuestion(){
+
+    quizIndex++;
+
+    renderQuestion();
+
+}
+
+
+function skipQuestion(){
+
+    quizIndex++;
+
+    renderQuestion();
+
+}
+
+
+function finishQuiz(){
+
+    document.getElementById("quizProgressBar").style.width="100%";
+
+    const total=quizQuestions.length;
+
+    const percent=
+        Math.round(quizScore/total*100);
+
+    document.getElementById("quizQuestion").innerHTML=
+        `Quiz Complete! 🏁`;
+
+    document.getElementById("quizAnswers").innerHTML=`
+        <div class="card" style="text-align:center">
+            <div style="font-size:55px">✈️</div>
+
+            <h2 style="margin-top:10px">
+                ${quizScore}/${total}
+            </h2>
+
+            <p style="color:var(--muted);margin-top:5px">
+                ${percent}% accuracy
+            </p>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width:${percent}%"></div>
+            </div>
+
+            <button class="btn primary section"
+                    onclick="startQuiz()">
+                Try Again
+            </button>
+
+            <button class="btn section"
+                    onclick="showPage('dashboard')">
+                Dashboard
+            </button>
+        </div>
+    `;
+
+    document.getElementById("quizFeedback").className="feedback";
+
+    document.getElementById("nextQuestionBtn").style.display="none";
+
+    checkAchievements();
+
+}
+
+
+/* -------------------------
+   MOCK EXAM
+------------------------- */
+
+function startMockExam(){
+
+    const mock=
+        [...questions]
+        .sort(()=>Math.random()-.5)
+        .slice(0,10);
+
+    startQuiz(mock,"mock");
+
+}
+
+
+/* -------------------------
+   DAILY CHALLENGE
+------------------------- */
+
+function dailyChallenge(){
+
+    const index=
+        new Date().getDate() % questions.length;
+
+    startQuiz([questions[index]]);
+
+}
+
+
+/* -------------------------
+   FACTS
+------------------------- */
+
+function renderFacts(){
+
+    const grid=document.getElementById("factsGrid");
+
+    grid.innerHTML="";
+
+    facts.forEach((fact,index)=>{
+
+        const div=document.createElement("div");
+
+        div.className="card fact";
+
+        div.innerHTML=`
+            <div class="fact-icon">💡</div>
+
+            <div>
+                <h3>${fact.title}</h3>
+
+                <p style="margin-top:8px">
+                    ${fact.text}
+                </p>
+            </div>
+        `;
+
+        grid.appendChild(div);
+
+    });
+
+}
+
+
+/* -------------------------
+   RADIO PRACTICE
+------------------------- */
+
+function checkRadio(){
+
+    const answer=
+        document.getElementById("radioAnswer")
+        .value
+        .toLowerCase();
+
+    const feedback=
+        document.getElementById("radioFeedback");
+
+    if(
+        answer.includes("zs-abc") &&
+        answer.includes("runway 01") &&
+        answer.includes("takeoff")
+    ){
+
+        feedback.className="feedback show correct";
+
+        feedback.innerHTML=
+            "✅ Good! You included the callsign and the key clearance information. Always follow the exact phraseology taught by your instructor and applicable procedures.";
+
+        state.xp+=15;
+
+    }else{
+
+        feedback.className="feedback show wrong";
+
+        feedback.innerHTML=
+            "💡 Review the scenario. A good response should acknowledge the relevant clearance using the aircraft callsign and appropriate phraseology.";
+
+    }
+
+    saveState();
+
+}
+
+
+/* -------------------------
+   ACHIEVEMENTS
+------------------------- */
+
+const achievementDefinitions=[
+
+    {
+        id:"first",
+        icon:"🛫",
+        title:"First Flight",
+        description:"Answer your first question.",
+        check:s=>s.questions>=1
+    },
+
+    {
+        id:"ten",
+        icon:"🎯",
+        title:"Locked In",
+        description:"Answer 10 questions.",
+        check:s=>s.questions>=10
+    },
+
+    {
+        id:"fifty",
+        icon:"🔥",
+        title:"On Fire",
+        description:"Answer 50 questions.",
+        check:s=>s.questions>=50
+    },
+
+    {
+        id:"hundred",
+        icon:"💯",
+        title:"Century",
+        description:"Answer 100 questions.",
+        check:s=>s.questions>=100
+    },
+
+    {
+        id:"xp1000",
+        icon:"🏆",
+        title:"Sky Scholar",
+        description:"Earn 1,000 XP.",
+        check:s=>s.xp>=1000
+    },
+
+    {
+        id:"accuracy",
+        icon:"🎓",
+        title:"Sharp Pilot",
+        description:"Reach at least 90% accuracy with 20+ questions.",
+        check:s=>{
+            const total=s.correct+s.wrong;
+            return total>=20 && s.correct/total>=.9;
+        }
+    },
+
+    {
+        id:"streak7",
+        icon:"🔥",
+        title:"Seven Days",
+        description:"Maintain a 7-day study streak.",
+        check:s=>s.streak>=7
+    }
+
+];
+
+
+function checkAchievements(){
+
+    achievementDefinitions.forEach(a=>{
+
+        if(
+            a.check(state) &&
+            !state.achievements.includes(a.id)
+        ){
+
+            state.achievements.push(a.id);
+
+            showToast("🏆 Achievement unlocked: "+a.title);
+
+        }
+
+    });
+
+    saveState();
+
+}
+
+
+function renderAchievements(){
+
+    const grid=
+        document.getElementById("achievementGrid");
+
+    if(!grid)return;
+
+    grid.innerHTML="";
+
+    achievementDefinitions.forEach(a=>{
+
+        const unlocked=
+            state.achievements.includes(a.id);
+
+        const div=document.createElement("div");
+
+        div.className=
+            "card achievement "+(!unlocked?"locked":"");
+
+        div.innerHTML=`
+            <div class="achievement-icon">${a.icon}</div>
+
+            <div>
+                <h3>${a.title}</h3>
+
+                <p style="color:var(--muted);font-size:12px;margin-top:5px;">
+                    ${a.description}
+                </p>
+
+                <div class="badge ${unlocked?"green":""}" style="margin-top:10px">
+                    ${unlocked?"UNLOCKED":"LOCKED"}
+                </div>
+            </div>
+        `;
+
+        grid.appendChild(div);
+
+    });
+
+}
+
+
+/* -------------------------
+   PROFILE
+------------------------- */
+
+function openProfile(){
+
+    document.getElementById("profileName").value=
+        state.name;
+
+    document.getElementById("profileGoal").value=
+        state.goal;
+
+    document.getElementById("profileModal")
+        .classList.add("show");
+
+}
+
+
+function closeProfile(){
+
+    document.getElementById("profileModal")
+        .classList.remove("show");
+
+}
+
+
+function saveProfile(){
+
+    state.name=
+        document.getElementById("profileName").value.trim();
+
+    state.goal=
+        document.getElementById("profileGoal").value;
+
+    saveState();
+
+    closeProfile();
+
+    showToast("Profile saved ✈️");
+
+}
+
+
+/* -------------------------
+   TOAST
+------------------------- */
+
+let toastTimer;
+
+function showToast(message){
+
+    const toast=
+        document.getElementById("toast");
+
+    toast.textContent=message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(
+        ()=>toast.classList.remove("show"),
+        2500
+    );
+
+}
+
+
+/* -------------------------
+   INITIALISE
+------------------------- */
+
+renderFlashcard();
+
+renderAlphabet();
+
+renderAbbreviations();
+
+renderFacts();
+
+updateDashboard();
+
+recordStudy();
+
+checkAchievements();
+
+
+/* Daily fact */
+
+const factIndex=
+    new Date().getDate()%facts.length;
+
+document.getElementById("dailyFactTitle").textContent=
+    facts[factIndex].title;
+
+document.getElementById("dailyFactText").textContent=
+    facts[factIndex].text;
+
+
+/* Keyboard shortcuts */
+
+document.addEventListener("keydown",e=>{
+
+    if(
+        document.getElementById("page-quiz").style.display!=="none"
+    ){
+
+        if(["1","2","3","4"].includes(e.key)){
+
+            const index=parseInt(e.key)-1;
+
+            const buttons=
+                document.querySelectorAll(".answer");
+
+            if(buttons[index]){
+                buttons[index].click();
+            }
+
+        }
+
+        if(e.key==="Enter" && quizAnswered){
+            nextQuestion();
+        }
+
+    }
+
+});
+
+
+</script>
+
+</body>
+              </html>
